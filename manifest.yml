@@ -1,0 +1,5 @@
+applications:
+- name: doneist
+  memory: 512m
+  buildpack: https://github.com/cloudfoundry/ruby-buildpack.git
+  command: ruby doneist.rb -e production
