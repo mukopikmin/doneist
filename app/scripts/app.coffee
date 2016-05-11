@@ -22,14 +22,6 @@ angular
   ]
   .config ($routeProvider) ->
     $routeProvider
-      .when '/',
-        templateUrl: 'views/main.html'
-        controller: 'MainCtrl'
-        controllerAs: 'main'
-      .when '/about',
-        templateUrl: 'views/about.html'
-        controller: 'AboutCtrl'
-        controllerAs: 'about'
       .when '/calendar',
         templateUrl: 'views/calendar.html'
         controller: 'CalendarCtrl'
@@ -39,4 +31,4 @@ angular
         controller: 'ListCtrl'
         controllerAs: 'list'
       .otherwise
-        redirectTo: '/'
+        redirectTo: '/calendar'
