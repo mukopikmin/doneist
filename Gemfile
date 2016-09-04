@@ -10,4 +10,6 @@ gem 'sinatra-cross_origin', '0.3.2'
 group :test do
   gem 'rspec', '3.4.0'
   gem 'rack-test', '0.6.3'
+  gem 'simplecov', '0.12.0'
+  gem 'simplecov-rcov', '0.2.3'
 end
