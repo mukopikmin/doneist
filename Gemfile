@@ -12,4 +12,7 @@ group :test do
   gem 'rack-test', '0.6.3'
   gem 'simplecov', '0.12.0'
   gem 'simplecov-rcov', '0.2.3'
+  gem 'ci_reporter_rspec', '1.0.0'
 end
+
+gem 'rake', '11.2.2'
