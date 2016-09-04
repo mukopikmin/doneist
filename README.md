@@ -1,5 +1,7 @@
 # Doneist
 
+[![Build Status](https://travis-ci.org/mukopikmin/doneist.svg?branch=master)](https://travis-ci.org/mukopikmin/doneist)
+
 View completed Todoist tasks.
 
 ## Requirement
