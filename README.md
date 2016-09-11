@@ -1,6 +1,9 @@
 # Doneist
 
 [![Build Status](https://travis-ci.org/mukopikmin/doneist.svg?branch=master)](https://travis-ci.org/mukopikmin/doneist)
+[![Dependency Status](https://gemnasium.com/badges/github.com/mukopikmin/doneist.svg)](https://gemnasium.com/github.com/mukopikmin/doneist)
+[![Code Climate](https://codeclimate.com/github/mukopikmin/doneist/badges/gpa.svg)](https://codeclimate.com/github/mukopikmin/doneist)
+[![Coverage Status](https://coveralls.io/repos/github/mukopikmin/doneist/badge.svg)](https://coveralls.io/github/mukopikmin/doneist)
 
 View completed Todoist tasks.
 
@@ -28,7 +31,7 @@ grunt build
 Install dependent packages via ruby bundler.
 
 ```
-bundle Install
+bundle install
 ```
 
 Set Todoist API token.
@@ -55,3 +58,8 @@ export BASICAUTH_PASSWORD=password
 ```
 
 ## Testing
+
+```
+bundle install
+bundle exec rake spec
+```

@@ -13,6 +13,7 @@ group :test do
   gem 'simplecov', '0.12.0'
   gem 'simplecov-rcov', '0.2.3'
   gem 'ci_reporter_rspec', '1.0.0'
+  gem 'coveralls', :require => false
 end
 
 gem 'rake', '11.2.2'
