@@ -13,6 +13,17 @@ angular.module 'doneistApp'
     api = 'http://localhost:4567/api'
     # api = '/api'
 
+    revokeToken: ->
+      params = {
+        token: Token.get()
+      }
+      $q (resolve, reject) ->
+        $http.post "#{api}/revoke_token", params
+          .success (response) ->
+            resolve response
+          .error (error) ->
+            reject error
+
     getConfig: ->
       $q (resolve, reject) ->
         $http.get "#{api}/auth_config"

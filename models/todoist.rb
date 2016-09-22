@@ -5,8 +5,15 @@ require 'sinatra/reloader'
 
 class Todoist
 
+  ENTRYPOINT = 'https://todoist.com'.freeze
+  API = 'API/v7'.freeze
+  STATUS_NO_CONTENT = 204.freeze
+  RESOURCE_TYPES = {
+    projects: '["projects"]'
+  }.freeze
+  SECURITY_CODE_LENGTH = 32.freeze
+
   def initialize front_app
-    @entrypoint = 'https://todoist.com/API/v7'
     @client_id = ENV['TODOIST_CLIENT_ID']
     @client_secret = ENV['TODOIST_CLIENT_SECRET']
     @scope = 'data:read'
@@ -17,7 +24,7 @@ class Todoist
     {
       client_id: @client_id,
       scope: @scope,
-      state: SecureRandom.base64(32)
+      state: SecureRandom.base64(SECURITY_CODE_LENGTH)
     }
   end
 
@@ -28,23 +35,37 @@ class Todoist
       code: code,
       redirect_uri: @front_app
     }
-    response = RestClient.post 'https://todoist.com/oauth/access_token', params
-    JSON.parse response
+    JSON.parse RestClient.post("#{ENTRYPOINT}/oauth/access_token", params)
+  end
+
+  def revoke_token token
+    params = {
+      client_id: @client_id,
+      client_secret: @client_secret,
+      access_token: token
+    }
+    options = {
+      content_type: :json,
+      accept: :json
+    }
+    url = "#{ENTRYPOINT}/api/access_tokens/revoke"
+    response = RestClient.post url, params.to_json, options
+    response.code == STATUS_NO_CONTENT
   end
 
   def get_all_projects token
     params = {
       token: token,
       sync_token: '*',
-      resource_types: '["projects"]'
+      resource_types: RESOURCE_TYPES[:projects]
     }
-    response = RestClient.post "#{@entrypoint}/sync", params
-    JSON.parse response
+    url = "#{ENTRYPOINT}/#{API}/sync"
+    JSON.parse RestClient.post(url, params)
   end
 
   def get_all_incompleted_items
-    response = RestClient.post "#{@entrypoint}/sync", :token => @token
-    JSON.parse response
+    url = "#{ENTRYPOINT}/#{API}/sync"
+    JSON.parse RestClient.post(url, :token => @token)
   end
 
   def get_all_completed_items seq, token
@@ -53,9 +74,8 @@ class Todoist
       sync_token: '*',
       resource_types: '["projects"]'
     }
-    p params
-    response = RestClient.post "#{@entrypoint}/get_all_completed_items", params
-    JSON.parse response
+    url = "#{ENTRYPOINT}/#{API}/get_all_completed_items"
+    JSON.parse RestClient.post(url, params)
   end
 
   def colors

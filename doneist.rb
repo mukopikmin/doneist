@@ -12,11 +12,20 @@ register Sinatra::Namespace
 
 configure do
   enable :cross_origin
+  set :allow_methods, [:get, :post, :options]
 end
 
 before do
   @front_app = 'http://localhost:9000/#'
   @todoist = Todoist.new @front_app
+end
+
+options "*" do
+  response.headers["Allow"] = "HEAD,GET,PUT,POST,DELETE,OPTIONS"
+
+  response.headers["Access-Control-Allow-Headers"] = "X-Requested-With, X-HTTP-Method-Override, Content-Type, Cache-Control, Accept"
+
+  200
 end
 
 get '/' do
@@ -25,12 +34,13 @@ end
 
 namespace '/api' do
 
-  get '/auth' do
-    @todoist.auth
-  end
-
   get '/auth_config' do
     json @todoist.todoist_config
+  end
+
+  post '/revoke_token' do
+    payload = JSON.parse request.body.read, :symbolize_names => true
+    json @todoist.revoke_token(payload[:token])
   end
 
   get '/authorized' do

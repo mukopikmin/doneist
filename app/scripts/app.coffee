@@ -38,5 +38,9 @@ angular
         templateUrl: 'views/auth.html'
         controller: 'AuthCtrl'
         controllerAs: 'auth'
+      .when '/signout',
+        templateUrl: 'views/signout.html'
+        controller: 'SignoutCtrl'
+        controllerAs: 'signout'
       .otherwise
-        redirectTo: '/'
+        redirectTo: '/list'
