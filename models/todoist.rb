@@ -1,40 +1,64 @@
 require 'rest-client'
 require 'json'
+require 'securerandom'
+require 'sinatra/reloader'
 
 class Todoist
 
-  API = 'https://todoist.com/API/v6'
-
-  def initialize
-    @token = ENV['TODOIST_TOKEN']
+  def initialize front_app
+    @entrypoint = 'https://todoist.com/API/v7'
+    @client_id = ENV['TODOIST_CLIENT_ID']
+    @client_secret = ENV['TODOIST_CLIENT_SECRET']
+    @scope = 'data:read'
+    @front_app = front_app
   end
 
-  def auth
-    RestClient.post "#{API}/login_with_google", :token => @token, :seq_no => 0, :resource_types => '["projects"]'
-
+  def todoist_config
+    {
+      client_id: @client_id,
+      scope: @scope,
+      state: SecureRandom.base64(32)
+    }
   end
 
-  def get_all_projects
-    response = RestClient.post "#{API}/sync", :token => @token, :seq_no => 0, :resource_types => '["projects"]'
+  def authorized code, state
+    params = {
+      client_id: @client_id,
+      client_secret: @client_secret,
+      code: code,
+      redirect_uri: @front_app
+    }
+    response = RestClient.post 'https://todoist.com/oauth/access_token', params
+    JSON.parse response
+  end
+
+  def get_all_projects token
+    params = {
+      token: token,
+      sync_token: '*',
+      resource_types: '["projects"]'
+    }
+    response = RestClient.post "#{@entrypoint}/sync", params
     JSON.parse response
   end
 
   def get_all_incompleted_items
-    response = RestClient.post "#{API}/sync", :token => @token
+    response = RestClient.post "#{@entrypoint}/sync", :token => @token
     JSON.parse response
   end
 
-  def get_all_completed_items seq
+  def get_all_completed_items seq, token
     params = {
-      token: @token,
-      since: '2016-04-01T00:00',
-      seq_no: seq
+      token: token,
+      sync_token: '*',
+      resource_types: '["projects"]'
     }
-    response = RestClient.post "#{API}/get_all_completed_items", params
+    p params
+    response = RestClient.post "#{@entrypoint}/get_all_completed_items", params
     JSON.parse response
   end
 
-  def self.colors
+  def colors
     [
       '#95ef63',
       '#ff8581',

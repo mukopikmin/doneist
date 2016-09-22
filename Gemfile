@@ -6,6 +6,7 @@ gem 'rest-client', '1.8.0'
 gem 'sinatra', '1.4.7'
 gem 'sinatra-contrib', '1.4.6'
 gem 'sinatra-cross_origin', '0.3.2'
+gem 'rake', '11.2.2'
 
 group :test do
   gem 'rspec', '3.4.0'
@@ -15,5 +16,3 @@ group :test do
   gem 'ci_reporter_rspec', '1.0.0'
   gem 'coveralls', :require => false
 end
-
-gem 'rake', '11.2.2'

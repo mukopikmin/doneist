@@ -30,5 +30,13 @@ angular
         templateUrl: 'views/list.html'
         controller: 'ListCtrl'
         controllerAs: 'list'
+      .when '/authorized',
+        templateUrl: 'views/authorized.html'
+        controller: 'AuthorizedCtrl'
+        controllerAs: 'authorized'
+      .when '/auth',
+        templateUrl: 'views/auth.html'
+        controller: 'AuthCtrl'
+        controllerAs: 'auth'
       .otherwise
-        redirectTo: '/calendar'
+        redirectTo: '/'

@@ -8,7 +8,7 @@
  # Controller of the doneistApp
 ###
 angular.module 'doneistApp'
-  .controller 'ListCtrl', ($rootScope, $scope, $q, Todoist) ->
+  .controller 'ListCtrl', ($rootScope, $scope, $q, Todoist, Token) ->
 
     $scope.projects = []
 
