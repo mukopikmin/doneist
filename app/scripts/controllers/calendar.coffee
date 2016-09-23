@@ -10,18 +10,8 @@
 angular.module 'doneistApp'
   .controller 'CalendarCtrl', ($rootScope, $scope, Todoist) ->
 
-    $scope.events = []
-    $scope.eventSources = [$scope.events]
-
     $scope.addEvent = (event) ->
       $scope.events.push event
-
-
-    Todoist.getCompletedTasks(1).then (tasks) ->
-      items = tasks.items
-      projects = tasks.projects
-      items.forEach (item) ->
-        $scope.addEvent item
 
     $scope.alertOnEventClick = (date, jsEvent, view) ->
       $scope.alertMessage = (date.title + ' was clicked ')
@@ -34,8 +24,8 @@ angular.module 'doneistApp'
 
     $scope.eventRender = (event, element, view) ->
       element.attr
-        'tooltip': event.title
-        'tooltip-append-to-body': true
+      'tooltip': event.title
+      'tooltip-append-to-body': true
       $compile(element)($scope);
 
     $scope.uiConfig =
@@ -46,9 +36,22 @@ angular.module 'doneistApp'
           left: 'title',
           center: '',
           right: 'today prev,next'
-        eventClick: $scope.alertOnEventClick
-        eventDrop: $scope.alertOnDrop
-        eventResize: $scope.alertOnResize
-        eventRender: $scope.eventRender
+          eventClick: $scope.alertOnEventClick
+          eventDrop: $scope.alertOnDrop
+          eventResize: $scope.alertOnResize
+          eventRender: $scope.eventRender
+
+    $scope.load = ->
+      $scope.loading = true
+      $scope.events = []
+      $scope.eventSources = [$scope.events]
+      Todoist.getCompletedTasks(1).then (tasks) ->
+        $scope.loading = false
+        items = tasks.items
+        projects = tasks.projects
+        items.forEach (item) ->
+          $scope.addEvent item
+
+    $scope.load()
 
     return

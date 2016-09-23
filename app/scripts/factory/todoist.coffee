@@ -10,8 +10,8 @@
 angular.module 'doneistApp'
   .factory 'Todoist', ($http, $q, Token) ->
 
-    api = 'http://localhost:4567/api'
-    # api = '/api'
+    # api = 'http://localhost:4567/api'
+    api = '/api'
 
     revokeToken: ->
       params = {

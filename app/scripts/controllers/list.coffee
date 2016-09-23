@@ -12,19 +12,24 @@ angular.module 'doneistApp'
 
     $scope.projects = []
 
-    Todoist.getProjects()
-      .then (projects) ->
-        $scope.projects = projects
-        Todoist.getCompletedTasks()
-      .then (tasks) ->
-        $scope.projects.map (project) ->
-          project.completed_tasks = tasks.items.filter (task) ->
-            if task.project_id == project.id then true
-        Todoist.getColors()
-      .then (colors) ->
-        $scope.projects.map (project) ->
-          project.color = colors[project.color]
-          project.completed_tasks.map (task) ->
-            task.completed_date = new Date(task.completed_date).toLocaleString().split(' ')[0]
+    $scope.load = ->
+      $scope.loading = true
+      Todoist.getProjects()
+        .then (projects) ->
+          $scope.projects = projects
+          Todoist.getCompletedTasks()
+        .then (tasks) ->
+          $scope.projects.map (project) ->
+            project.completed_tasks = tasks.items.filter (task) ->
+              if task.project_id == project.id then true
+          Todoist.getColors()
+        .then (colors) ->
+          $scope.loading = false
+          $scope.projects.map (project) ->
+            project.color = colors[project.color]
+            project.completed_tasks.map (task) ->
+              task.completed_date = new Date(task.completed_date).toLocaleString().split(' ')[0]
+
+    $scope.load()
 
     return
