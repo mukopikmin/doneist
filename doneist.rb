@@ -35,7 +35,7 @@ end
 namespace '/api' do
 
   get '/auth_config' do
-    json @todoist.todoist_config
+    json @todoist.config
   end
 
   post '/revoke_token' do
@@ -61,6 +61,6 @@ namespace '/api' do
   end
 
   get '/colors' do
-    json @todoist.colors
+    json Todoist.colors
   end
 end

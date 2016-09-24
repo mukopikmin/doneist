@@ -15,4 +15,5 @@ group :test do
   gem 'simplecov-rcov', '0.2.3'
   gem 'ci_reporter_rspec', '1.0.0'
   gem 'coveralls', :require => false
+  gem 'dotenv', '2.1.1'
 end

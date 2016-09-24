@@ -18,6 +18,7 @@ GEM
     docile (1.1.5)
     domain_name (0.5.20160310)
       unf (>= 0.0.5, < 1.0.0)
+    dotenv (2.1.1)
     ffi (1.9.10-x86-mingw32)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
@@ -89,6 +90,7 @@ PLATFORMS
 DEPENDENCIES
   ci_reporter_rspec (= 1.0.0)
   coveralls
+  dotenv (= 2.1.1)
   rack-test (= 0.6.3)
   rake (= 11.2.2)
   rest-client (= 1.8.0)

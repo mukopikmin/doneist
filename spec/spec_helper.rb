@@ -25,6 +25,8 @@ require 'rack/test'
 require 'rspec'
 require 'simplecov'
 require 'simplecov-rcov'
+require 'dotenv'
+Dotenv.load
 require 'coveralls'
 Coveralls.wear!
 

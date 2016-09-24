@@ -20,7 +20,7 @@ class Todoist
     @front_app = front_app
   end
 
-  def todoist_config
+  def config
     {
       client_id: @client_id,
       scope: @scope,
@@ -35,7 +35,11 @@ class Todoist
       code: code,
       redirect_uri: @front_app
     }
-    JSON.parse RestClient.post("#{ENTRYPOINT}/oauth/access_token", params)
+    begin
+      JSON.parse RestClient.post("#{ENTRYPOINT}/oauth/access_token", params)
+    rescue RestClient::ExceptionWithResponse => e
+      JSON.parse e.response, symbolize_names: true
+    end
   end
 
   def revoke_token token
@@ -48,9 +52,13 @@ class Todoist
       content_type: :json,
       accept: :json
     }
-    url = "#{ENTRYPOINT}/api/access_tokens/revoke"
-    response = RestClient.post url, params.to_json, options
-    response.code == STATUS_NO_CONTENT
+    begin
+      url = "#{ENTRYPOINT}/api/access_tokens/revoke"
+      RestClient.post url, params.to_json, options
+      true
+    rescue RestClient::ExceptionWithResponse => e
+      JSON.parse e.response, symbolize_names: true
+    end
   end
 
   def get_all_projects token
@@ -59,13 +67,21 @@ class Todoist
       sync_token: '*',
       resource_types: RESOURCE_TYPES[:projects]
     }
-    url = "#{ENTRYPOINT}/#{API}/sync"
-    JSON.parse RestClient.post(url, params)
+    begin
+      url = "#{ENTRYPOINT}/#{API}/sync"
+      JSON.parse RestClient.post(url, params)
+    rescue RestClient::ExceptionWithResponse => e
+      JSON.parse e.response, symbolize_names: true
+    end
   end
 
   def get_all_incompleted_items
-    url = "#{ENTRYPOINT}/#{API}/sync"
-    JSON.parse RestClient.post(url, :token => @token)
+    begin
+      url = "#{ENTRYPOINT}/#{API}/sync"
+      JSON.parse RestClient.post(url, :token => @token)
+    rescue RestClient::ExceptionWithResponse => e
+      JSON.parse e.response, symbolize_names: true
+    end
   end
 
   def get_all_completed_items seq, token
@@ -74,11 +90,15 @@ class Todoist
       sync_token: '*',
       resource_types: '["projects"]'
     }
-    url = "#{ENTRYPOINT}/#{API}/get_all_completed_items"
-    JSON.parse RestClient.post(url, params)
+    begin
+      url = "#{ENTRYPOINT}/#{API}/get_all_completed_items"
+      JSON.parse RestClient.post(url, params)
+    rescue RestClient::ExceptionWithResponse => e
+      JSON.parse e.response, symbolize_names: true
+    end
   end
 
-  def colors
+  def self.colors
     [
       '#95ef63',
       '#ff8581',
@@ -104,5 +124,4 @@ class Todoist
       '#777777'
     ]
   end
-
 end
