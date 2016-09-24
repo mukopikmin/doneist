@@ -16,8 +16,7 @@ configure do
 end
 
 before do
-  @front_app = ENV['APP_URI']
-  # @front_app = 'http://localhost:9000/#'
+  @front_app = ENV['APP_URI'] || 'http://localhost:9000/#'
   @todoist = Todoist.new @front_app
 end
 

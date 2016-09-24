@@ -1,3 +1,17 @@
-FROM nginx
+FROM ruby:2.2
 
-COPY dist/ /usr/share/nginx/html
+
+WORKDIR /app
+
+ADD Gemfile /app
+ADD Gemfile.lock /app
+
+RUN bundle install --path vendor/bundle
+
+COPY . /app
+
+ENV RACK_ENV production
+
+EXPOSE 4567
+
+CMD ["bundle", "exec", "ruby", "doneist.rb"]
