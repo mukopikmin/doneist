@@ -25,8 +25,8 @@ describe :Todoist do
     end
   end
 
-  xdescribe "#authorized" do
-    let(:response) { @todoist.authorized @code, @state }
+  xdescribe "#token_exchange" do
+    let(:response) { @todoist.token_exchange @code, @state }
 
     it "returns Hash" do
       expect(response).to be_kind_of Hash
@@ -52,10 +52,10 @@ describe :Todoist do
     end
   end
 
-  describe "#get_all_projects" do
+  describe "#projects" do
 
     context "with correct token" do
-      subject { @todoist.get_all_projects @test_token }
+      subject { @todoist.projects @test_token }
 
       it "returns Hash" do
         is_expected.to be_kind_of Hash
@@ -63,7 +63,7 @@ describe :Todoist do
     end
 
     context "with illegal token" do
-      subject { @todoist.get_all_projects('illegal_tl
+      subject { @todoist.projects('illegal_tl
         oken')[:error] }
 
       it "returns error message" do
@@ -72,10 +72,10 @@ describe :Todoist do
     end
   end
 
-  describe "#get_all_completed_items" do
+  describe "#completed_items" do
 
     context "with correct token" do
-      subject { @todoist.get_all_completed_items @test_token }
+      subject { @todoist.completed_items @test_token }
 
       it "returns Hash" do
         is_expected.to be_kind_of Hash
@@ -83,7 +83,7 @@ describe :Todoist do
     end
 
     context "with illegal token" do
-      subject { @todoist.get_all_projects('illegal_tl
+      subject { @todoist.completed_items('illegal_tl
         oken')[:error] }
 
       it "returns error message" do

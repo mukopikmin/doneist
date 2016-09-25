@@ -24,7 +24,7 @@ class Todoist
     }
   end
 
-  def authorized code, state
+  def token_exchange code, state
     params = {
       client_id: @client_id,
       client_secret: @client_secret,
@@ -60,7 +60,7 @@ class Todoist
     end
   end
 
-  def get_all_projects token
+  def projects token
     params = {
       token: token,
       sync_token: '*',
@@ -74,7 +74,7 @@ class Todoist
     end
   end
 
-  def get_all_completed_items token
+  def completed_items token
     params = {
       token: token
     }

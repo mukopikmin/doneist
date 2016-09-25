@@ -43,17 +43,17 @@ namespace '/api' do
     json @todoist.revoke_token(payload[:token])
   end
 
-  get '/authorized' do
-    token = @todoist.authorized(params[:code], params[:state])
+  get '/token_exchange' do
+    token = @todoist.token_exchange(params[:code], params[:state])
     redirect to "#{@front_app}/authorized?token=#{token[:access_token]}"
   end
 
   get '/completed' do
-    json @todoist.get_all_completed_items(params[:token])
+    json @todoist.completed_items(params[:token])
   end
 
   get '/projects' do
-    json @todoist.get_all_projects(params[:token])
+    json @todoist.projects(params[:token])
   end
 
   get '/colors' do
