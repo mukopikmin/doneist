@@ -78,6 +78,14 @@ namespace '/api' do
     end
   end
 
+  get '/user' do
+    begin
+      json @todoist.user(params[:token])
+    rescue RestClient::ExceptionWithResponse => e
+      error_handle e
+    end
+  end
+
   get '/colors' do
     json Todoist.colors
   end

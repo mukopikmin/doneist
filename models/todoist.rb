@@ -86,6 +86,20 @@ class Todoist
     end
   end
 
+  def user token
+    params = {
+      token: token,
+      sync_token: '*',
+      resource_types: self.class.resource_types(:user)
+    }
+    begin
+      url = "#{ENTRYPOINT}/#{API}/sync"
+      JSON.parse RestClient.post(url, params), symbolize_names: true
+    rescue RestClient::ExceptionWithResponse => e
+      raise e
+    end
+  end
+
   def self.resource_types resource
     {
       all: '["all"]',

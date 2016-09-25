@@ -136,13 +136,13 @@ describe :Todoist do
         end
 
         it "returns Hash" do
-          expect(body).to be_kind_of Hash
+          expect(response).to be_kind_of Hash
         end
       end
 
       context "with illegal token" do
         before { get "/api/user?token=#{@illegal_token}" }
-        subject { last_response }
+        subject { last_response.status }
         let(:response) { JSON.parse last_response.body, symbolize_names: true }
 
         it "returns 403" do
@@ -150,7 +150,7 @@ describe :Todoist do
         end
 
         it "returns Hash" do
-          expect(body).to be_kind_of Hash
+          expect(response).to be_kind_of Hash
         end
       end
     end
