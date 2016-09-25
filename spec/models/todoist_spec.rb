@@ -104,6 +104,24 @@ describe :Todoist do
     end
   end
 
+  describe "#user" do
+    context "with correct token" do
+      let(:response) { @todoist.user @test_token }
+
+      it "return user in specified format" do
+        expect(response).to be_kind_of Hash
+      end
+    end
+
+    context "with illegal token" do
+      it "raises exception" do
+        expect {
+          @todoist.user @illegal_token
+        }.to raise_exception
+      end
+    end
+  end
+
   describe ".resource_types" do
     subject { Todoist.resource_types :all }
 

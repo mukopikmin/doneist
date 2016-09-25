@@ -110,10 +110,40 @@ describe :Todoist do
         end
       end
 
-      xcontext "with illegal token" do
+      context "with illegal token" do
         before { get "/api/projects?token=#{@illegal_token}" }
         subject { last_response.status }
         let(:body) { JSON.parse last_response.body, symbolize_names: true }
+
+        it "returns 403" do
+          is_expected.to eq 403
+        end
+
+        it "returns Hash" do
+          expect(body).to be_kind_of Hash
+        end
+      end
+    end
+
+    describe "/user" do
+      context "with correct token" do
+        before { get "/api/user?token=#{@test_token}" }
+        subject { last_response }
+        let(:response) { JSON.parse last_response.body, symbolize_names: true }
+
+        it "returns ok" do
+          is_expected.to be_ok
+        end
+
+        it "returns Hash" do
+          expect(body).to be_kind_of Hash
+        end
+      end
+
+      context "with illegal token" do
+        before { get "/api/user?token=#{@illegal_token}" }
+        subject { last_response }
+        let(:response) { JSON.parse last_response.body, symbolize_names: true }
 
         it "returns 403" do
           is_expected.to eq 403
