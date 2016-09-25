@@ -22,9 +22,16 @@ before do
   @todoist = Todoist.new client_id, client_secret, @front_app
 end
 
-options "*" do
-  response.headers["Allow"] = "HEAD,GET,PUT,POST,DELETE,OPTIONS"
-  response.headers["Access-Control-Allow-Headers"] = "X-Requested-With, X-HTTP-Method-Override, Content-Type, Cache-Control, Accept"
+helpers do
+  def error_handle(e)
+    status e.http_code
+    json JSON.parse(e.response)
+  end
+end
+
+options '*' do
+  response.headers['Allow'] = 'HEAD,GET,PUT,POST,DELETE,OPTIONS'
+  response.headers['Access-Control-Allow-Headers'] = 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Cache-Control, Accept'
   200
 end
 
@@ -33,30 +40,52 @@ get '/' do
 end
 
 namespace '/api' do
-
   get '/config' do
     json @todoist.config
   end
 
   post '/revoke_token' do
-    payload = JSON.parse request.body.read, :symbolize_names => true
-    json @todoist.revoke_token(payload[:token])
+    begin
+      payload = JSON.parse request.body.read, symbolize_names: true
+      json @todoist.revoke_token(payload[:token])
+    rescue RestClient::ExceptionWithResponse => e
+      error_handle e
+    end
   end
 
   get '/token_exchange' do
-    token = @todoist.token_exchange(params[:code], params[:state])
-    redirect to "#{@front_app}/authorized?token=#{token[:access_token]}"
+    begin
+      token = @todoist.token_exchange(params[:code], params[:state])
+      redirect to "#{@front_app}/authorized?token=#{token[:access_token]}"
+    rescue RestClient::ExceptionWithResponse => e
+      error_handle e
+    end
   end
 
   get '/completed' do
-    json @todoist.completed_items(params[:token])
+    begin
+      json @todoist.completed_items(params[:token])
+    rescue RestClient::ExceptionWithResponse => e
+      error_handle e
+    end
   end
 
   get '/projects' do
-    json @todoist.projects(params[:token])
+    begin
+      json @todoist.projects(params[:token])
+    rescue RestClient::ExceptionWithResponse => e
+      error_handle e
+    end
   end
 
   get '/colors' do
     json Todoist.colors
   end
+end
+
+not_found do
+  error = {
+    error: 'Not found'
+  }
+  json error
 end

@@ -35,7 +35,7 @@ class Todoist
       url = "#{ENTRYPOINT}/oauth/access_token"
       JSON.parse RestClient.post(url, params), symbolize_names: true
     rescue RestClient::ExceptionWithResponse => e
-      JSON.parse e.response, symbolize_names: true
+      raise e
     end
   end
 
@@ -56,7 +56,7 @@ class Todoist
         result: 'ok'
       }
     rescue RestClient::ExceptionWithResponse => e
-      JSON.parse e.response, symbolize_names: true
+      raise e
     end
   end
 
@@ -70,7 +70,7 @@ class Todoist
       url = "#{ENTRYPOINT}/#{API}/sync"
       JSON.parse RestClient.post(url, params), symbolize_names: true
     rescue RestClient::ExceptionWithResponse => e
-      JSON.parse e.response, symbolize_names: true
+      raise e
     end
   end
 
@@ -80,9 +80,9 @@ class Todoist
     }
     begin
       url = "#{ENTRYPOINT}/#{API}/completed/get_all"
-      JSON.parse RestClient.post(url, params)
+      JSON.parse RestClient.post(url, params), symbolize_names: true
     rescue RestClient::ExceptionWithResponse => e
-      JSON.parse e.response, symbolize_names: true
+      raise e
     end
   end
 

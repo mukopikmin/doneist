@@ -7,7 +7,7 @@ describe :Todoist do
   end
 
   before do
-    @test_token = ENV['TODOIST_TEST_TokEN']
+    @test_token = ENV['TODOIST_TEST_TOKEN']
     @illegal_token = 'thisisillegaltoken'
   end
 
@@ -46,11 +46,11 @@ describe :Todoist do
 
       context "with illegal token" do
         before { get "/api/revoke_token?token=#{@illegal_token}" }
-        subject { last_response }
+        subject { last_response.status }
         let(:config) { JSON.parse last_response.body, symbolize_names: true }
 
-        it "returns Forbidden" do
-          is_expected.to be_ok
+        it "returns 403" do
+          is_expected.to eq 403
         end
       end
     end
@@ -82,11 +82,11 @@ describe :Todoist do
 
       context "with illegal token" do
         before { get "/api/projects?token=#{@illegal_token}" }
-        subject { last_response }
+        subject { last_response.status }
         let(:body) { JSON.parse last_response.body, symbolize_names: true }
 
-        it "returns ok" do
-          is_expected.to be_ok
+        it "returns 403" do
+          is_expected.to eq 403
         end
 
         it "returns Hash" do
@@ -112,11 +112,11 @@ describe :Todoist do
 
       xcontext "with illegal token" do
         before { get "/api/projects?token=#{@illegal_token}" }
-        subject { last_response }
+        subject { last_response.status }
         let(:body) { JSON.parse last_response.body, symbolize_names: true }
 
-        it "returns ok" do
-          is_expected.to be_ok
+        it "returns 403" do
+          is_expected.to eq 403
         end
 
         it "returns Hash" do
