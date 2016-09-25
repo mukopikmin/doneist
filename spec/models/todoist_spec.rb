@@ -8,7 +8,7 @@ describe :Todoist do
     @client_secret = ENV['TODOIST_CLIENT_SECRET']
     @todoist = Todoist.new @client_id, @client_secret, @front_app
     @test_token = ENV['TODOIST_TEST_TOKEN']
-    @state = 'thisisteststate'
+    @illegal_token = 'thisisileegaltoken'
   end
 
   describe "#config" do
@@ -18,76 +18,88 @@ describe :Todoist do
       expect(config).to be_kind_of Hash
     end
 
-    it "returns Hash which includes specified keys" do
-      expect(config[:client_id]).to be_kind_of String
+    it "returns Hash in specified format" do
+      expect(config[:client_id]).to eq @client_id
       expect(config[:scope]).to eq 'data:read'
       expect(config[:state]).to be_kind_of String
     end
   end
 
   xdescribe "#token_exchange" do
-    let(:response) { @todoist.token_exchange @code, @state }
+    context "with correct token" do
+      let(:credentials) { @todoist.token_exchange @code, @state }
 
-    it "returns Hash" do
-      expect(response).to be_kind_of Hash
+      it "returns Hash in specified format" do
+        expect(credentials).to be_kind_of Hash
+        expect(credentials[:access_token]).to be_kind_of String
+        expect(credentials[:token_type]).to be_kind_of String
+      end
+    end
+
+    context "with illegal token" do
+      it "raises exception" do
+        expect(@todoist.token_exchange @code, @state).to raise_exception
+      end
     end
   end
 
   describe "#revoke_token" do
-
-    xcontext "revoke success" do
+    xcontext "with correct token" do
       let(:result) { @todoist.revoke_token @test_token }
 
-      it "returns true" do
-        expect(result).to be true
+      it "returns Hash" do
+        expect(result).to be_kind_of Hash
+      end
+
+      it "contains message ok" do
+        expect(result[:result]).to eq 'ok'
       end
     end
 
-    context "revole failed" do
-      let(:result) { @todoist.revoke_token 'illegal_access_token' }
-
-      it "contains error message" do
-        expect(result[:error]).to be_kind_of String
+    context "with illegal token" do
+      it "raises exception" do
+        expect {
+          @todoist.revoke_token @illegal_token
+      }.to raise_exception
       end
     end
   end
 
   describe "#projects" do
-
     context "with correct token" do
-      subject { @todoist.projects @test_token }
+      let(:response) { @todoist.projects @test_token }
 
-      it "returns Hash" do
-        is_expected.to be_kind_of Hash
+      it "returns Hash in specified format" do
+        expect(response).to be_kind_of Hash
+        expect(response[:projects]).to be_kind_of Array
       end
     end
 
     context "with illegal token" do
-      subject { @todoist.projects('illegal_tl
-        oken')[:error] }
-
-      it "returns error message" do
-        is_expected.to be_kind_of String
+      it "raises exception" do
+        expect {
+          @todoist.projects @illegal_token
+        }.to raise_exception
       end
     end
   end
 
   describe "#completed_items" do
-
     context "with correct token" do
-      subject { @todoist.completed_items @test_token }
+      let(:response) { @todoist.completed_items @test_token }
 
-      it "returns Hash" do
-        is_expected.to be_kind_of Hash
+      it "returns Hash in specified format" do
+        expect(response).to be_kind_of Hash
+        expect(response[:items]).to be_kind_of Array
+        expect(response[:projects]).to be_kind_of Hash
       end
     end
 
     context "with illegal token" do
-      subject { @todoist.completed_items('illegal_tl
-        oken')[:error] }
-
-      it "returns error message" do
-        is_expected.to be_kind_of String
+      it "raises exception" do
+        expect {
+          @todoist.completed_items @illegal_token
+        }.to raise_exception
       end
     end
   end
