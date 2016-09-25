@@ -59,6 +59,14 @@ angular.module 'doneistApp'
           .error (error) ->
             reject error
 
+    getUser: ->
+      $q (resolve, reject) ->
+        $http.get "#{api}/user?token=#{Token.get()}"
+          .success (response) ->
+            resolve response.user
+          .error (error) ->
+            reject error
+
     getColors: ->
       $q (resolve, reject) ->
         $http.get "#{api}/colors"

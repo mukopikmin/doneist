@@ -12,6 +12,11 @@ angular.module 'doneistApp'
 
     $scope.projects = []
 
+    Todoist.getUser()
+      .then (user) ->
+        console.log user.full_name
+        $rootScope.user = user
+
     $scope.load = ->
       $scope.loading = true
       Todoist.getProjects()
