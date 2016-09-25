@@ -22,6 +22,12 @@ Install build tools via npm.
 npm install -g grunt-cli bower
 ```
 
+Install packkages with `bower`.
+
+```
+bower install
+```
+
 Build UI components.
 
 ```
@@ -34,10 +40,11 @@ Install dependent packages via ruby bundler.
 bundle install
 ```
 
-Set Todoist API token.
+Set Todoist API parameters.
 
 ```
-export TODOIST_TOKEN=xxxxxxxxxxxxxxxxxxx
+export TODOIST_CLIENT_ID=xxxxxxxxxxxxxxxxxxx
+export TODOIST_CLIENT_SECRET=xxxxxxxxxxxxxxxxxxx
 ```
 
 Run server.
@@ -48,14 +55,6 @@ bundle exec ruby doneist.rb
 
 By default this app runs on `http://localhost:4567`.
 
-## Enable Basic auth
-
-If you want to enable basic auth, set environment variables as follows.
-
-```
-export BASICAUTH_USER=username
-export BASICAUTH_PASSWORD=password
-```
 
 ## Testing
 
