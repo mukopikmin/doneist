@@ -26,7 +26,7 @@ angular.module 'doneistApp'
 
     getConfig: ->
       $q (resolve, reject) ->
-        $http.get "#{api}/auth_config"
+        $http.get "#{api}/config"
           .success (response) ->
             resolve response
           .error (error) ->

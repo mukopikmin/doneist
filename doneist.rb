@@ -34,7 +34,7 @@ end
 
 namespace '/api' do
 
-  get '/auth_config' do
+  get '/config' do
     json @todoist.config
   end
 
