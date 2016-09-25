@@ -16,15 +16,15 @@ configure do
 end
 
 before do
-  @front_app = ENV['APP_URI'] || 'http://localhost:9000/#'
-  @todoist = Todoist.new @front_app
+  client_id = ENV['TODOIST_CLIENT_ID']
+  client_secret = ENV['TODOIST_CLIENT_SECRET']
+  @front_app = ENV['APP_URI'] || 'http://localhost:4567/#'
+  @todoist = Todoist.new client_id, client_secret, @front_app
 end
 
 options "*" do
   response.headers["Allow"] = "HEAD,GET,PUT,POST,DELETE,OPTIONS"
-
   response.headers["Access-Control-Allow-Headers"] = "X-Requested-With, X-HTTP-Method-Override, Content-Type, Cache-Control, Accept"
-
   200
 end
 
@@ -45,15 +45,11 @@ namespace '/api' do
 
   get '/authorized' do
     token = @todoist.authorized(params[:code], params[:state])
-    redirect to "#{@front_app}/authorized?token=#{token['access_token']}"
+    redirect to "#{@front_app}/authorized?token=#{token[:access_token]}"
   end
 
-  get '/incompleted' do
-
-  end
-
-  get '/completed/:seq' do
-    json @todoist.get_all_completed_items(params[:seq], params[:token])
+  get '/completed' do
+    json @todoist.get_all_completed_items(params[:token])
   end
 
   get '/projects' do

@@ -4,11 +4,10 @@ describe :Todoist do
 
   before do
     @front_app = 'http://doneist.sample.com'
-    @todoist = Todoist.new @front_app
     @client_id = ENV['TODOIST_CLIENT_ID']
     @client_secret = ENV['TODOIST_CLIENT_SECRET']
+    @todoist = Todoist.new @client_id, @client_secret, @front_app
     @test_token = ENV['TODOIST_TEST_TOKEN']
-    @code = ENV['CODE']
     @state = 'thisisteststate'
   end
 
@@ -26,17 +25,13 @@ describe :Todoist do
     end
   end
 
-  # describe "#authorized" do
-  #   let(:response) { @todoist.authorized @code, @state }
-  #
-  #   it "returns Hash" do
-  #     expect(response).to be_kind_of Hash
-  #   end
-  #
-  #   it "text" do
-  #
-  #   end
-  # end
+  xdescribe "#authorized" do
+    let(:response) { @todoist.authorized @code, @state }
+
+    it "returns Hash" do
+      expect(response).to be_kind_of Hash
+    end
+  end
 
   describe "#revoke_token" do
 
@@ -77,26 +72,6 @@ describe :Todoist do
     end
   end
 
-  describe "#get_all_incompleted_items" do
-
-    context "with correct token" do
-      subject { @todoist.get_all_incompleted_items @test_token }
-
-      it "returns Hash" do
-        is_expected.to be_kind_of Hash
-      end
-    end
-
-    context "with illegal token" do
-      subject { @todoist.get_all_projects('illegal_tl
-        oken')[:error] }
-
-      it "returns error message" do
-        is_expected.to be_kind_of String
-      end
-    end
-  end
-
   describe "#get_all_completed_items" do
 
     context "with correct token" do
@@ -114,6 +89,14 @@ describe :Todoist do
       it "returns error message" do
         is_expected.to be_kind_of String
       end
+    end
+  end
+
+  describe ".resource_types" do
+    subject { Todoist.resource_types :all }
+
+    it "return specified format string" do
+      is_expected.to eq '["all"]'
     end
   end
 

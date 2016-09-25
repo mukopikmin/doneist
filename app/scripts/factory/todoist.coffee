@@ -34,7 +34,7 @@ angular.module 'doneistApp'
 
     getCompletedTasks: (seq) ->
       $q (resolve, reject) ->
-        $http.get "#{api}/completed/#{seq}?token=#{Token.get()}"
+        $http.get "#{api}/completed?token=#{Token.get()}"
           .success (response) ->
             response.items.map (item) ->
               item.title = item.content
