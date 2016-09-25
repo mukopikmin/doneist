@@ -50,13 +50,22 @@ export TODOIST_CLIENT_SECRET=xxxxxxxxxxxxxxxxxxx
 Run server.
 
 ```
-bundle exec ruby doneist.rb
+bundle exec rake serve
 ```
 
 By default this app runs on `http://localhost:4567`.
 
-
 ## Testing
+
+Set Todoist API parameters.
+
+```
+export TODOIST_CLIENT_ID=xxxxxxxxxxxxxxxxxxx
+export TODOIST_CLIENT_SECRET=xxxxxxxxxxxxxxxxxxx
+export TODOIST_TEST_TOKEN=xxxxxxxxxxxxxxxxxxx
+```
+
+Launch test.
 
 ```
 bundle install
