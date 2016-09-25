@@ -7,7 +7,7 @@ describe :Todoist do
   end
 
   before do
-    @test_token = ENV['TODOIST_TEST_TOKEN']
+    @test_token = ENV['TODOIST_TEST_TokEN']
     @illegal_token = 'thisisillegaltoken'
   end
 
@@ -18,7 +18,7 @@ describe :Todoist do
       subject { last_response }
       let(:config) { JSON.parse last_response.body, symbolize_names: true }
 
-      it "returns OK" do
+      it "returns ok" do
         is_expected.to be_ok
       end
 
@@ -34,17 +34,17 @@ describe :Todoist do
     end
 
     xdescribe "/revoke_token" do
-      context "revoke success" do
+      context "with correct token" do
         before { get "/api/revoke_token?token=#{@test_token}" }
         subject { last_response }
         let(:config) { JSON.parse last_response.body, symbolize_names: true }
 
-        it "returns OK" do
+        it "returns ok" do
           is_expected.to be_ok
         end
       end
 
-      context "revoke fail" do
+      context "with illegal token" do
         before { get "/api/revoke_token?token=#{@illegal_token}" }
         subject { last_response }
         let(:config) { JSON.parse last_response.body, symbolize_names: true }
@@ -66,12 +66,12 @@ describe :Todoist do
     end
 
     describe "/completed" do
-      context "auth success" do
+      context "with correct token" do
         before { get "/api/projects?token=#{@test_token}" }
         subject { last_response }
         let(:body) { JSON.parse last_response.body, symbolize_names: true }
 
-        it "returns OK" do
+        it "returns ok" do
           is_expected.to be_ok
         end
 
@@ -80,12 +80,12 @@ describe :Todoist do
         end
       end
 
-      context "auth fail" do
+      context "with illegal token" do
         before { get "/api/projects?token=#{@illegal_token}" }
         subject { last_response }
         let(:body) { JSON.parse last_response.body, symbolize_names: true }
 
-        it "returns OK" do
+        it "returns ok" do
           is_expected.to be_ok
         end
 
@@ -96,12 +96,12 @@ describe :Todoist do
     end
 
     describe "/projects" do
-      context "auth success" do
+      context "with correct token" do
         before { get "/api/projects?token=#{@test_token}" }
         subject { last_response }
         let(:body) { JSON.parse last_response.body, symbolize_names: true }
 
-        it "returns OK" do
+        it "returns ok" do
           is_expected.to be_ok
         end
 
@@ -110,12 +110,12 @@ describe :Todoist do
         end
       end
 
-      xcontext "auth fail" do
+      xcontext "with illegal token" do
         before { get "/api/projects?token=#{@illegal_token}" }
         subject { last_response }
         let(:body) { JSON.parse last_response.body, symbolize_names: true }
 
-        it "returns OK" do
+        it "returns ok" do
           is_expected.to be_ok
         end
 
@@ -130,7 +130,7 @@ describe :Todoist do
       subject { last_response }
       let(:body) { JSON.parse last_response.body, symbolize_names: true }
 
-      it "returns OK" do
+      it "returns ok" do
         is_expected.to be_ok
       end
 
