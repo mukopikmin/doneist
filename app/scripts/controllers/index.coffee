@@ -8,11 +8,13 @@
  # Controller of the doneistApp
 ###
 angular.module 'doneistApp'
-  .controller 'IndexCtrl', ($scope, Todoist) ->
+  .controller 'IndexCtrl', ($scope, Token, Todoist) ->
 
-    Todoist.getUser()
-      .then (user) ->
-        $scope.user = user
+    token = Token.get()
+    if token
+      Todoist.getUser(token)
+        .then (user) ->
+          $scope.user = user
 
     Todoist.getConfig()
       .then (config) ->

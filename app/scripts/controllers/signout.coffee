@@ -8,11 +8,12 @@
  # Controller of the doneistApp
 ###
 angular.module 'doneistApp'
-  .controller 'SignoutCtrl', ($location, Todoist, Token) ->
+  .controller 'SignoutCtrl', ($location, $rootScope, Todoist, Token) ->
 
-    Todoist.revokeToken()
+    Todoist.revokeToken(Token.get())
       .then (response) ->
-        $location.path '/'
         Token.remove()
+        $rootScope.user = null
+        $location.path '/'
 
     return

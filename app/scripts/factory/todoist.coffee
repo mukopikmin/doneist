@@ -8,14 +8,14 @@
  # Factory in the doneistApp.
 ###
 angular.module 'doneistApp'
-  .factory 'Todoist', ($http, $q, Token) ->
+  .factory 'Todoist', ($http, $q) ->
 
-    # api = 'http://localhost:4567/api'
-    api = '/api'
+    api = 'http://localhost:4567/api'
+    # api = '/api'
 
-    revokeToken: ->
+    revokeToken: (token) ->
       params = {
-        token: Token.get()
+        token: token
       }
       $q (resolve, reject) ->
         $http.post "#{api}/revoke_token", params
@@ -32,9 +32,9 @@ angular.module 'doneistApp'
           .error (error) ->
             reject error
 
-    getCompletedTasks: (seq) ->
+    getCompletedTasks: (token) ->
       $q (resolve, reject) ->
-        $http.get "#{api}/completed?token=#{Token.get()}"
+        $http.get "#{api}/completed?token=#{token}"
           .success (response) ->
             response.items.map (item) ->
               item.title = item.content
@@ -43,9 +43,9 @@ angular.module 'doneistApp'
           .error (error) ->
             reject error
 
-    getProjects: ->
+    getProjects: (token) ->
       $q (resolve, reject) ->
-        $http.get "#{api}/projects?token=#{Token.get()}"
+        $http.get "#{api}/projects?token=#{token}"
           .success (response) ->
             # console.log response
             # projects = response.Projects.sort (a, b) ->
@@ -59,9 +59,9 @@ angular.module 'doneistApp'
           .error (error) ->
             reject error
 
-    getUser: ->
+    getUser: (token) ->
       $q (resolve, reject) ->
-        $http.get "#{api}/user?token=#{Token.get()}"
+        $http.get "#{api}/user?token=#{token}"
           .success (response) ->
             resolve response.user
           .error (error) ->

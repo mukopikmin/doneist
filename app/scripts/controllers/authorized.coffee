@@ -8,11 +8,13 @@
  # Controller of the doneistApp
 ###
 angular.module 'doneistApp'
-  .controller 'AuthorizedCtrl', ($routeParams, $location, Token) ->
+  .controller 'AuthorizedCtrl', ($routeParams, $rootScope, $location, Token, Todoist) ->
 
     Token.set $location.search()['token']
-    console.log Token.get()
 
-    $location.path('/list').search({})
+    Todoist.getUser(Token.get())
+      .then (user) ->
+        $rootScope.user = user
+        $location.path('/').search({})
 
     return

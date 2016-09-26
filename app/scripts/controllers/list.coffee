@@ -8,16 +8,23 @@
  # Controller of the doneistApp
 ###
 angular.module 'doneistApp'
-  .controller 'ListCtrl', ($rootScope, $scope, $q, Todoist, Token) ->
+  .controller 'ListCtrl', ($rootScope, $scope, Todoist, Token) ->
 
     $scope.projects = []
+    $scope.message = undefined
+
+    # Todoist.getUser(Token.get())
+    #   .then (user) ->
+    #     $rootScope.user = user
+    #     console.log user
 
     $scope.load = ->
       $scope.loading = true
-      Todoist.getProjects()
+      token = Token.get()
+      Todoist.getProjects(token)
         .then (projects) ->
           $scope.projects = projects
-          Todoist.getCompletedTasks()
+          Todoist.getCompletedTasks(token)
         .then (tasks) ->
           $scope.projects.map (project) ->
             project.completed_tasks = tasks.items.filter (task) ->
@@ -30,6 +37,9 @@ angular.module 'doneistApp'
             project.completed_tasks.map (task) ->
               task.completed_date = new Date(task.completed_date).toLocaleString().split(' ')[0]
 
-    $scope.load()
+    if Token.get()
+      $scope.load()
+    else
+      $scope.message = 'Not signed in'
 
     return
