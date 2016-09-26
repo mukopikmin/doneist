@@ -12,14 +12,6 @@ angular.module 'doneistApp'
 
     $scope.projects = []
 
-    Todoist.getUser()
-      .then (user) ->
-        $rootScope.user = user
-
-    Todoist.getConfig()
-      .then (config) ->
-        $rootScope.authLink = "https://todoist.com/oauth/authorize?client_id=#{config.client_id}&scope=#{config.scope}&state=#{config.state}"
-
     $scope.load = ->
       $scope.loading = true
       Todoist.getProjects()
