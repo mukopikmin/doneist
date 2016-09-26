@@ -8,7 +8,7 @@
  # Controller of the doneistApp
 ###
 angular.module 'doneistApp'
-  .controller 'CalendarCtrl', ($rootScope, $scope, Todoist) ->
+  .controller 'CalendarCtrl', ($rootScope, $scope, Todoist, Token) ->
 
     $scope.addEvent = (event) ->
       $scope.events.push event
@@ -45,13 +45,14 @@ angular.module 'doneistApp'
       $scope.loading = true
       $scope.events = []
       $scope.eventSources = [$scope.events]
-      Todoist.getCompletedTasks(1).then (tasks) ->
+      Todoist.getCompletedTasks(Token.get()).then (tasks) ->
         $scope.loading = false
         items = tasks.items
         projects = tasks.projects
         items.forEach (item) ->
           $scope.addEvent item
 
-    $scope.load()
+    if Token.get()
+      $scope.load()
 
     return
