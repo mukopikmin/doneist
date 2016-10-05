@@ -18,9 +18,11 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'ui.calendar'
+    'ui.calendar',
+    'ngMaterial',
+    'ngMdIcons'
   ]
-  .config ($routeProvider) ->
+  .config ($routeProvider, $mdThemingProvider) ->
     $routeProvider
       .when '/calendar',
         templateUrl: 'views/calendar.html'
@@ -44,3 +46,9 @@ angular
         controllerAs: 'signout'
       .otherwise
         redirectTo: '/list'
+    # $mdThemingProvider
+    #   .theme('default')
+    #   .primaryPalette('indigo')
+    #   .accentPalette('pink')
+    #   .warnPalette('red')
+    #   .backgroundPalette('blue-grey')

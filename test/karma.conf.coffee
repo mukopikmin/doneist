@@ -31,6 +31,8 @@ module.exports = (config) ->
       'bower_components/moment/moment.js'
       'bower_components/fullcalendar/dist/fullcalendar.js'
       'bower_components/angular-ui-calendar/src/calendar.js'
+      'bower_components/angular-material/angular-material.js'
+      'bower_components/angular-material-icons/angular-material-icons.min.js'
       'bower_components/angular-mocks/angular-mocks.js'
       # endbower
       # bower:coffee
