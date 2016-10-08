@@ -19,8 +19,7 @@ angular
     'ngSanitize',
     'ngTouch',
     'ui.calendar',
-    'ngMaterial',
-    'ngMdIcons'
+    'ngMaterial'
   ]
   .config ($routeProvider, $mdThemingProvider) ->
     $routeProvider
