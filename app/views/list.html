@@ -1,21 +1,26 @@
 <div layout="row" layout-sm="column" layout-align="space-around">
-  <md-progress-circular  ng-show="loading" md-mode="indeterminate"></md-progress-circular>
+  <md-progress-circular ng-show="loading" md-mode="indeterminate"></md-progress-circular>
+</div>
+
+<div ng-show="!loading && user === undefined" class="message-center">
+  <md-icon class="material-icons md-48">feedback</md-icon>
+  <p>Not signed in. Sign in from <a ng-href="{{ authLink }}">here</a>.</p>
 </div>
 
 <div layout="column" layout-gt-sm="row" layout-wrap>
-<div flex="25" flex-gt-sm="50" ng-repeat="project in projects" ng-show="project.completed_tasks.length > 0">
-  <md-card>
-    <md-toolbar>
-      <div class="md-toolbar-tools">
-        <h4>
+  <div flex="25" flex-gt-sm="50" ng-repeat="project in projects" ng-show="project.completed_tasks.length > 0">
+    <md-card>
+      <md-toolbar>
+        <div class="md-toolbar-tools">
+          <h4>
           <span>{{ project.name }}</span>
         </h4>
-      </div>
-    </md-toolbar>
-    <md-list>
-      <md-list-item ng-href="#" ng-repeat="task in project.completed_tasks">
-        {{ task.content }}
-      </md-list-item>
-    </md-list>
-  </md-card>
-</div>
+        </div>
+      </md-toolbar>
+      <md-list>
+        <md-list-item ng-href="#" ng-repeat="task in project.completed_tasks">
+          {{ task.content }}
+        </md-list-item>
+      </md-list>
+    </md-card>
+  </div>

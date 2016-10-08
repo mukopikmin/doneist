@@ -9,7 +9,7 @@
 ###
 angular.module 'doneistApp'
   .controller 'IndexCtrl', ($scope, $mdSidenav, Token, Todoist) ->
-
+    
     token = Token.get()
     if token
       Todoist.getUser(token)
