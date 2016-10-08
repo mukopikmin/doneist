@@ -20,6 +20,7 @@ angular
     'ngTouch',
     'ui.calendar',
     'ngMaterial',
+    'materialCalendar'
   ]
   .config ($routeProvider, $mdIconProvider, $mdThemingProvider) ->
     $routeProvider
