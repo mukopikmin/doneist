@@ -8,7 +8,7 @@
  # Controller of the doneistApp
 ###
 angular.module 'doneistApp'
-  .controller 'CalendarCtrl', ($scope, $filter, $q, $timeout, Todoist, Token) ->
+  .controller 'CalendarCtrl', ($scope, $filter, $q, $timeout, $http, Todoist, Token) ->
 
     $scope.dayFormat = 'd'
     $scope.selectedDate = null
@@ -30,27 +30,17 @@ angular.module 'doneistApp'
     $scope.tooltips = true
 
     $scope.setDayContent = (date, content) ->
-      # You would inject any HTML you wanted for
-      # that particular date here.
-      # console.log date
-      # console.log content
-      return "<p>#{content}</p>"
-      # You could also use an $http function directly.
-      return $http.get('/some/external/api')
-      # You could also use a promise.
-      deferred = $q.defer()
-      $timeout (->
-        deferred.resolve '<p></p>'
-      ), 1000
-      deferred.promise
-
-    Todoist.getCompletedTasks(Token.get())
-      .then (tasks) ->
-        tasks.items.forEach (item) ->
-          console.log item.content
-          console.log new Date(item.completed_date)
-          $scope.setDayContent(new Date(item.completed_date), item.content)
-      .then () ->
-        console.log "end"
+      $q (resolve, reject) ->
+        $http.get("https://todoist.com/API/v7/completed/get_all?token=#{Token.get()}")
+          .success (response) ->
+            items = response.items.filter (item) ->
+              completedDate = new Date(item.completed_date)
+              year = completedDate.getFullYear()
+              month = completedDate.getMonth()
+              day = completedDate.getDate()
+              new Date(year, month, day).getTime() == date.getTime()
+            items = items.map (item) ->
+              "<li>#{item.content}</li>"
+            resolve "<ul>#{items.join('')}</ul>"
 
     return

@@ -1,20 +1,21 @@
-<div ng-show="loading" align="center">
-  <i class="fa fa-refresh fa-spin fa-2x fa-fw"></i>
-  <span class="sr-only">Loading...</span>
+<!-- <div layout="row" layout-sm="column" layout-align="space-around">
+  <md-progress-circular ng-show="loading" md-mode="indeterminate"></md-progress-circular>
 </div>
-<calendar-md flex layout layout-fill
-  calendar-direction="direction"
-  on-prev-month="prevMonth"
-  on-next-month="nextMonth"
-  on-day-click="dayClick"
-  title-format="'MMMM y'"
-  ng-model='selectedDate'
-  week-starts-on="firstDayOfWeek"
-  tooltips="tooltips"
-  day-format="dayFormat"
-  day-label-format="'EEE'"
-  day-label-tooltip-format="'EEEE'"
-  day-tooltip-format="'fullDate'"
-  day-content="setDayContent"
-  disable-future-selection="false">
-  </calendar-md>
+
+<div ng-show="!loading"> -->
+  <calendar-md flex layout layout-fill
+    calendar-direction="direction"
+    on-prev-month="prevMonth"
+    on-next-month="nextMonth"
+    on-day-click="dayClick"
+    title-format="'MMMM y'"
+    ng-model='selectedDate'
+    week-starts-on="firstDayOfWeek"
+    tooltips="tooltips"
+    day-format="dayFormat"
+    day-label-format="'EEE'"
+    day-label-tooltip-format="'EEEE'"
+    day-tooltip-format="'fullDate'"
+    day-content="setDayContent"
+    disable-future-selection="false"></calendar-md>
+<!-- </div> -->
