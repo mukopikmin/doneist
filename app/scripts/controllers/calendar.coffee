@@ -8,51 +8,49 @@
  # Controller of the doneistApp
 ###
 angular.module 'doneistApp'
-  .controller 'CalendarCtrl', ($rootScope, $scope, Todoist, Token) ->
+  .controller 'CalendarCtrl', ($scope, $filter, $q, $timeout, Todoist, Token) ->
 
-    $scope.addEvent = (event) ->
-      $scope.events.push event
+    $scope.dayFormat = 'd'
+    $scope.selectedDate = null
+    $scope.firstDayOfWeek = 0
 
-    $scope.alertOnEventClick = (date, jsEvent, view) ->
-      $scope.alertMessage = (date.title + ' was clicked ')
+    $scope.setDirection = (direction) ->
+      $scope.direction = direction
+      $scope.dayFormat = if direction == 'vertical' then 'EEEE, MMMM d' else 'd'
 
-    $scope.alertOnDrop = (event, delta, revertFunc, jsEvent, ui, view) ->
-      $scope.alertMessage = ('Event Droped to make dayDelta ' + delta)
+    $scope.dayClick = (date) ->
+      $scope.msg = 'You clicked ' + $filter('date')(date, 'MMM d, y h:mm:ss a Z')
 
-    $scope.alertOnResize = (event, delta, revertFunc, jsEvent, ui, view) ->
-      $scope.alertMessage = ('Event Resized to make dayDelta ' + delta)
+    $scope.prevMonth = (data) ->
+      $scope.msg = 'You clicked (prev) month ' + data.month + ', ' + data.year
 
-    $scope.eventRender = (event, element, view) ->
-      element.attr
-      'tooltip': event.title
-      'tooltip-append-to-body': true
-      $compile(element)($scope);
+    $scope.nextMonth = (data) ->
+      $scope.msg = 'You clicked (next) month ' + data.month + ', ' + data.year
 
-    $scope.uiConfig =
-      calendar:
-        height: 450,
-        editable: true,
-        header:
-          left: 'title',
-          center: '',
-          right: 'today prev,next'
-          eventClick: $scope.alertOnEventClick
-          eventDrop: $scope.alertOnDrop
-          eventResize: $scope.alertOnResize
-          eventRender: $scope.eventRender
+    $scope.tooltips = true
 
-    $scope.load = ->
-      $scope.loading = true
-      $scope.events = []
-      $scope.eventSources = [$scope.events]
-      Todoist.getCompletedTasks(Token.get()).then (tasks) ->
-        $scope.loading = false
-        items = tasks.items
-        projects = tasks.projects
-        items.forEach (item) ->
-          $scope.addEvent item
+    $scope.setDayContent = (date, content) ->
+      # You would inject any HTML you wanted for
+      # that particular date here.
+      # console.log date
+      # console.log content
+      return "<p>#{content}</p>"
+      # You could also use an $http function directly.
+      return $http.get('/some/external/api')
+      # You could also use a promise.
+      deferred = $q.defer()
+      $timeout (->
+        deferred.resolve '<p></p>'
+      ), 1000
+      deferred.promise
 
-    if Token.get()
-      $scope.load()
+    Todoist.getCompletedTasks(Token.get())
+      .then (tasks) ->
+        tasks.items.forEach (item) ->
+          console.log item.content
+          console.log new Date(item.completed_date)
+          $scope.setDayContent(new Date(item.completed_date), item.content)
+      .then () ->
+        console.log "end"
 
     return
