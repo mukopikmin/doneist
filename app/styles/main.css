@@ -24,3 +24,13 @@ md-progress-circular {
   border-radius: 50%;
   margin-left: 15px;
 }
+
+.md-light {
+  color: white;
+}
+
+header {
+  background-image: url(../images/background.png);
+  background-size: cover;
+  color: white;
+}

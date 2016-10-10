@@ -99,3 +99,4 @@ $RECYCLE.BIN/
 /.sass-cache
 /bower_components
 .env
+.DS_Store

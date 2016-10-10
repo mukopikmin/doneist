@@ -25,9 +25,8 @@
     <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
   <section layout="row" flex>
-
     <md-sidenav class="site-sidenav md-sidenav-left md-whiteframe-z2" md-component-id="left" hide-print md-is-locked-open="$mdMedia('gt-sm')">
-      <header style="background-image: url(images/background.png); background-size: cover; color: white;">
+      <header>
         <md-list>
           <br>
           <img ng-show="user" ng-src="{{ user.avatar_big }}" alt="avatar" class="avatar">
@@ -45,11 +44,11 @@
             <h3>Not signed in</h3>
           </md-list-item>
           <md-list-item ng-show="!user" ng-href="{{ authLink }}">
-            <md-icon style="color: white;">account_box</md-icon>
+            <md-icon class="material-icons md-light">account_box</md-icon>
             <p>Sign in</p>
           </md-list-item>
           <md-list-item ng-show="user" ng-href="#/signout">
-            <md-icon style="color: white;">exit_to_app</md-icon>
+            <md-icon class="material-icons md-light">exit_to_app</md-icon>
             <p>Sign out</p>
           </md-list-item>
         </md-list>
