@@ -44,13 +44,9 @@ angular
         templateUrl: 'views/signout.html'
         controller: 'SignoutCtrl'
         controllerAs: 'signout'
+      .when '/about',
+        templateUrl: 'views/about.html'
+        controller: 'AboutCtrl'
+        controllerAs: 'about'
       .otherwise
         redirectTo: '/list'
-    # $mdIconProvider.fontSet('ionic', 'ionicons')
-
-    # $mdThemingProvider
-    #   .theme('default')
-    #   .primaryPalette('indigo')
-    #   .accentPalette('pink')
-    #   .warnPalette('red')
-    #   .backgroundPalette('blue-grey')
