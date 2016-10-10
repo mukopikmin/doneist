@@ -10,13 +10,9 @@
 angular.module 'doneistApp'
   .controller 'ListCtrl', ($rootScope, $scope, Todoist, Token) ->
 
-    $scope.projects = []
-    $scope.message = undefined
+    $rootScope.location = 'List'
 
-    # Todoist.getUser(Token.get())
-    #   .then (user) ->
-    #     $rootScope.user = user
-    #     console.log user
+    $scope.projects = []
 
     $scope.load = ->
       $scope.loading = true
@@ -39,7 +35,5 @@ angular.module 'doneistApp'
 
     if Token.get()
       $scope.load()
-    else
-      $scope.message = 'Not signed in'
 
     return
