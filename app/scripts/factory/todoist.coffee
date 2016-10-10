@@ -10,8 +10,8 @@
 angular.module 'doneistApp'
   .factory 'Todoist', ($http, $q) ->
 
-    api = 'http://localhost:4567/api'
-    # api = '/api'
+    # api = 'http://localhost:4567/api'
+    api = '/api'
 
     revokeToken: (token) ->
       params = {
@@ -47,7 +47,6 @@ angular.module 'doneistApp'
       $q (resolve, reject) ->
         $http.get "#{api}/projects?token=#{token}"
           .success (response) ->
-            console.log response
             projects = response.projects.sort (a, b) ->
               if a.item_order > b.item_order then 1 else -1
             resolve response.projects
