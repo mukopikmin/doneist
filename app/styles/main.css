@@ -1,3 +1,7 @@
+body {
+  font-size: 90%;
+}
+
 md-progress-circular {
   position: absolute;
   top: 0;
@@ -33,4 +37,8 @@ header {
   background-image: url(../images/background.png);
   background-size: cover;
   color: white;
+}
+
+.calendar {
+  font-size: 60%;
 }

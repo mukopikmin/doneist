@@ -34,8 +34,7 @@
             <div class="md-list-item-text">
               <p>
                 <b>{{ user.full_name }}</b>
-                <br>
-                {{ user.email }}
+                <br> {{ user.email }}
               </p>
             </div>
             <md-divider inset></md-divider>
@@ -79,6 +78,13 @@
           </md-button>
           <h2>Doneist</h2>
           <span flex></span>
+        </div>
+      </md-toolbar>
+      <md-toolbar md-scroll-shrink ng-if="location">
+        <div class="md-toolbar-tools">
+          <h3>
+            <span>{{ location }}</span>
+          </h3>
         </div>
       </md-toolbar>
       <div flex layout="column" layout-padding>

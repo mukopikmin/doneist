@@ -8,7 +8,9 @@
  # Controller of the doneistApp
 ###
 angular.module 'doneistApp'
-  .controller 'CalendarCtrl', ($scope, $filter, $q, $timeout, $http, Todoist, Token) ->
+  .controller 'CalendarCtrl', ($rootScope, $scope, $filter, $q, $timeout, $http, Todoist, Token) ->
+
+    $rootScope.location = 'Calendar'
 
     $scope.dayFormat = 'd'
     $scope.selectedDate = null
