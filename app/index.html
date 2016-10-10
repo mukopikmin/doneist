@@ -27,22 +27,33 @@
   <section layout="row" flex>
 
     <md-sidenav class="site-sidenav md-sidenav-left md-whiteframe-z2" md-component-id="left" hide-print md-is-locked-open="$mdMedia('gt-sm')">
-
-      <!-- <header class="nav-header ng-isolate-scope">
-        <a ng-href="/" class="docs-logo">
-          <img ng-src="{{ user.avatar_big }}" alt="" />
-          <h1 class="docs-logotype md-heading">Angular Material</h1>
-        </a>
-      </header> -->
-
-      <md-toolbar class="md-tall md-hue-2">
-        <div layout="column" class="md-toolbar-tools-bottom inset">
-          <!-- <img ng-show="user" ng-src="{{ user.avatar_small }}" alt="icon"> -->
-          <span></span>
-          <div>{{ user.full_name }}</div>
-          <div>{{ user.email }}</div>
-        </div>
-      </md-toolbar>
+      <header style="background-image: url(images/background.png); background-size: cover; color: white;">
+        <md-list>
+          <br>
+          <img ng-show="user" ng-src="{{ user.avatar_big }}" alt="avatar" class="avatar">
+          <md-list-item>
+            <div class="md-list-item-text">
+              <p>
+                <b>{{ user.full_name }}</b>
+                <br>
+                {{ user.email }}
+              </p>
+            </div>
+            <md-divider inset></md-divider>
+          </md-list-item>
+          <md-list-item ng-show="!user">
+            <h3>Not signed in</h3>
+          </md-list-item>
+          <md-list-item ng-show="!user" ng-href="{{ authLink }}">
+            <md-icon style="color: white;">account_box</md-icon>
+            <p>Sign in</p>
+          </md-list-item>
+          <md-list-item ng-show="user" ng-href="#/signout">
+            <md-icon style="color: white;">exit_to_app</md-icon>
+            <p>Sign out</p>
+          </md-list-item>
+        </md-list>
+      </header>
       <md-content>
         <md-list>
           <md-list-item ng-href="#/list">
@@ -53,18 +64,9 @@
             <md-icon>today</md-icon>
             <p>Calendar</p>
           </md-list-item>
-          <md-list-item ng-href="{{ authLink }}">
-            <md-icon>account_box</md-icon>
-            <p>Sign in</p>
-          </md-list-item>
-          <md-list-item ng-href="#/signout">
-            <md-icon>exit_to_app</md-icon>
-            <p>Sign out</p>
-          </md-list-item>
-          <md-list-item ng-href="#">
-            <p>
-              <img ng-show="user" ng-src="{{ user.avatar_small }}" alt="icon"> {{ user.full_name || 'Not signed in' }}
-            </p>
+          <md-list-item ng-href="#/about">
+            <md-icon>info_outline</md-icon>
+            <p>About</p>
           </md-list-item>
         </md-list>
       </md-content>
