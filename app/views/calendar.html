@@ -3,7 +3,8 @@
   <p>Not signed in. Sign in from <a ng-href="{{ authLink }}">here</a>.</p>
 </div>
 
-<calendar-md flex layout layout-fill
+<div ng-show="user != null">
+  <calendar-md flex layout layout-fill
   calendar-direction="direction"
   on-prev-month="prevMonth"
   on-next-month="nextMonth"
@@ -18,3 +19,4 @@
   day-tooltip-format="'fullDate'"
   day-content="setDayContent"
   disable-future-selection="false"></calendar-md>
+</div>
