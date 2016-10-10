@@ -20,7 +20,7 @@ angular.module 'doneistApp'
       .then (config) ->
         $scope.authLink = "https://todoist.com/oauth/authorize?client_id=#{config.client_id}&scope=#{config.scope}&state=#{config.state}"
 
-    $scope.toggleSidenav = (menuId) ->
-      $mdSidenav(menuId).toggle()
+    $scope.toggleLeft = ->
+      $mdSidenav('left').toggle()
 
     return
