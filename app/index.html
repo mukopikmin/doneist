@@ -46,7 +46,7 @@
             <md-icon class="material-icons md-light">account_box</md-icon>
             <p>Sign in</p>
           </md-list-item>
-          <md-list-item ng-show="user" ng-href="#/signout">
+          <md-list-item ng-show="user" ng-click="goto('signout')">
             <md-icon class="material-icons md-light">exit_to_app</md-icon>
             <p>Sign out</p>
           </md-list-item>
@@ -54,15 +54,15 @@
       </header>
       <md-content>
         <md-list>
-          <md-list-item ng-href="#/list">
+          <md-list-item ng-click="goto('list')">
             <md-icon>list</md-icon>
             <p>List</p>
           </md-list-item>
-          <md-list-item ng-href="#/calendar">
+          <md-list-item ng-click="goto('calendar')">
             <md-icon>today</md-icon>
             <p>Calendar</p>
           </md-list-item>
-          <md-list-item ng-href="#/about">
+          <md-list-item ng-click="goto('about')">
             <md-icon>info_outline</md-icon>
             <p>About</p>
           </md-list-item>

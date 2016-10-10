@@ -8,7 +8,7 @@
  # Controller of the doneistApp
 ###
 angular.module 'doneistApp'
-  .controller 'IndexCtrl', ($scope, $mdSidenav, Token, Todoist) ->
+  .controller 'IndexCtrl', ($scope, $mdSidenav, $location, Token, Todoist) ->
 
     token = Token.get()
     if token
@@ -22,5 +22,9 @@ angular.module 'doneistApp'
 
     $scope.toggleLeft = ->
       $mdSidenav('left').toggle()
+
+    $scope.goto = (destination) ->
+      $scope.toggleLeft()
+      $location.path(destination)
 
     return
