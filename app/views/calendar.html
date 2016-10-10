@@ -1,21 +1,20 @@
-<!-- <div layout="row" layout-sm="column" layout-align="space-around">
-  <md-progress-circular ng-show="loading" md-mode="indeterminate"></md-progress-circular>
+<div ng-show="user == null" class="message-center">
+  <md-icon class="material-icons md-48">feedback</md-icon>
+  <p>Not signed in. Sign in from <a ng-href="{{ authLink }}">here</a>.</p>
 </div>
 
-<div ng-show="!loading"> -->
-  <calendar-md flex layout layout-fill
-    calendar-direction="direction"
-    on-prev-month="prevMonth"
-    on-next-month="nextMonth"
-    on-day-click="dayClick"
-    title-format="'MMMM y'"
-    ng-model='selectedDate'
-    week-starts-on="firstDayOfWeek"
-    tooltips="tooltips"
-    day-format="dayFormat"
-    day-label-format="'EEE'"
-    day-label-tooltip-format="'EEEE'"
-    day-tooltip-format="'fullDate'"
-    day-content="setDayContent"
-    disable-future-selection="false"></calendar-md>
-<!-- </div> -->
+<calendar-md flex layout layout-fill
+  calendar-direction="direction"
+  on-prev-month="prevMonth"
+  on-next-month="nextMonth"
+  on-day-click="dayClick"
+  title-format="'MMMM y'"
+  ng-model='selectedDate'
+  week-starts-on="firstDayOfWeek"
+  tooltips="tooltips"
+  day-format="dayFormat"
+  day-label-format="'EEE'"
+  day-label-tooltip-format="'EEEE'"
+  day-tooltip-format="'fullDate'"
+  day-content="setDayContent"
+  disable-future-selection="false"></calendar-md>

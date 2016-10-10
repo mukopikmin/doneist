@@ -2,7 +2,7 @@
   <md-progress-circular ng-show="loading" md-mode="indeterminate"></md-progress-circular>
 </div>
 
-<div ng-show="!loading && user === undefined" class="message-center">
+<div ng-show="!loading && user == null" class="message-center">
   <md-icon class="material-icons md-48">feedback</md-icon>
   <p>Not signed in. Sign in from <a ng-href="{{ authLink }}">here</a>.</p>
 </div>
